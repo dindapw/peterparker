@@ -1,8 +1,6 @@
 import json
 
-import boto3
-
-from common import config, save, archive_file
+from common import config, save, archive_file, s3
 
 
 def do_replicate_movies(data):
@@ -31,13 +29,7 @@ def do_replicate_movies(data):
 
 
 def run():
-    resource = boto3.resource(
-        's3',
-        aws_access_key_id=config["boto"]["aws_access_key_id"],
-        aws_secret_access_key=config["boto"]["aws_secret_key"],
-        region_name=config["boto"]["region"]
-    )
-    objects = resource.Bucket(config["boto"]["bucket"]) \
+    objects = s3.Bucket(config["boto"]["bucket"]) \
         .objects.filter(Prefix="movies")
 
     for obj in objects:
@@ -46,10 +38,10 @@ def run():
 
         try:
             do_replicate_movies(data)
-            archive_file(resource, obj)
+            archive_file(s3, obj)
         except Exception as ex:
             print(ex)
-            archive_file(resource, obj, as_error=True)
+            archive_file(s3, obj, as_error=True)
 
 
 if __name__ == '__main__':
