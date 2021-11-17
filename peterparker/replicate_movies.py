@@ -8,25 +8,23 @@ from common import config, save, archive_file
 def do_replicate_movies(data):
     if "genres" in data.keys():
         save(data["genres"], "genre", ["id"])
-        data.pop("genres")
+        data["genres"] = [i["id"] for i in data["genres"]]
     if "production_companies" in data.keys():
         save(data["production_companies"], "production_company", ["id"])
-        data.pop("production_companies")
-    if "belongs_to_collection" in data.keys() \
-            and data["belongs_to_collection"] is not None:
-        save(data["belongs_to_collection"], "movie_collection", ["id"])
-        data["belongs_to_collection"] = data["belongs_to_collection"] \
-            .get("id", None)
+        data["production_companies"] = [i["id"] for i in
+                                        data["production_companies"]]
     if "production_countries" in data.keys():
         temp = [{"code": each["iso_3166_1"], "name": each["name"]}
                 for each in data["production_countries"]]
-        save(temp, "production_country", ["code"])
-        data.pop("production_countries")
+        save(temp, "country", ["code"])
+        data["production_countries"] = [i["iso_3166_1"] for i in
+                                        data["production_countries"]]
     if "spoken_languages" in data.keys():
         temp = [{"code": each["iso_639_1"], "name": each["name"]}
                 for each in data["spoken_languages"]]
-        save(temp, "spoken_language", ["code"])
-        data.pop("spoken_languages")
+        save(temp, "language", ["code"])
+        data["spoken_languages"] = [i["iso_639_1"]
+                                    for i in data["spoken_languages"]]
     if data["release_date"] == "":
         data["release_date"] = None
     save(data, "movie", ["id"])
