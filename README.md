@@ -1,14 +1,15 @@
 # peterparker
 
-Welcome to this project. The name peterparker is inspired by the random user airflow created during a [quickstart instalation tutorial](https://airflow.apache.org/docs/apache-airflow/stable/start/local.html).
+<p>Welcome.</p>
+The name **peterparker** for this project is inspired by the random user airflow created during a [quickstart instalation tutorial](https://airflow.apache.org/docs/apache-airflow/stable/start/local.html).
 This project attempts to build a simple data warehouse out of [this dataset](https://www.kaggle.com/edgartanaka1/tmdb-movies-and-series).
 
 
-## Pre pipeline
+## Prepipeline
 1. The pipeline assumes that the **source dataset is stored in AWS S3** somehow.
    - In this simulation, [the dataset](https://www.kaggle.com/edgartanaka1/tmdb-movies-and-series) is downloaded manually to a local machine.
    - Then uploaded to s3 using [upload_to_s3.py](https://github.com/dindapw/peterparker/blob/main/peterparker/upload_to_s3.py) script.
-2. The pipeline is deployed in AWS EC2, and scheduled in this [Airflow](http://3.26.36.18:8080/).
+2. The pipeline is deployed in AWS EC2, and scheduled in Airflow (which also deployed in EC2).
    - Credential for S3 and PostgreSQL is saved in configuration file inside the EC2 server.
    - Environment variables is an option to set credentials but it's quite annoying to use back and forth between local machine venv and server.
    - Tutorial on how to setup free EC2 to host airflow can be read [here](https://medium.com/@dindapw/install-airlfow-2-0-on-awss-free-tier-ec2-8ab4b70d8d)
@@ -33,11 +34,14 @@ This project attempts to build a simple data warehouse out of [this dataset](htt
 8. Repeat process 1 thru 6 until there is no more file to read.
 
 
-## Data structure
+## Data Ware House
 ![structure](structure.png)
-Here's a list of the tables, and its structure
+
+Here is the list of table. Each table has date_effective to indicate when the data is replicated to the table. If there's a duplicate data, it will be updated, including the date_effective.
+
 <details>
 <summary> table "series" </summary>
+<p>This table holds the details of tv series and including the popularity and rating.</p>
 <p>
 
 ```sql
@@ -80,6 +84,7 @@ create table series
 
 <details>
 <summary> table "movie" </summary>
+<p>This table holds the details of movie and including the popularity and rating given to the movie.</p>
 <p>
 
 ```sql
@@ -119,6 +124,7 @@ create table movie
 
 <details>
 <summary> table "creator" </summary>
+<p>This table contains the creator of series. You can join this table with series to find out which creator has the highest rating series, etc..</p>
 <p>
 
 ```sql
@@ -137,6 +143,7 @@ create table creator
 
 <details>
 <summary> table "genre" </summary>
+<p>This table contains a list of genre of all the movie and series data we collected.</p>
 <p>
 
 ```sql
@@ -153,6 +160,7 @@ create table genre
 
 <details>
 <summary> table "language" </summary>
+<p>This table contains list of languages (spoken or not) for all series and movie data we collected.</p>
 <p>
 
 ```sql
@@ -169,6 +177,7 @@ create table language
 
 <details>
 <summary> table "network" </summary>
+<p>This table contains list of network that air the series.</p>
 <p>
 
 ```sql
@@ -188,6 +197,7 @@ create table network
 
 <details>
 <summary> table "country" </summary>
+<p>This table contains list of country where the movie production take place.</p>
 <p>
 
 ```sql
@@ -205,6 +215,7 @@ create table country
 
 <details>
 <summary> table "production_company" </summary>
+<p>This table contains list of production company that make the movie.</p>
 <p>
 
 ```sql
@@ -222,3 +233,6 @@ create table production_company
 </details>
 
 
+## Improvement
+- The process of reading file and saving it to database is quite slow. We should implement paralelism, by listing all files in the folder, and divide it into 5 or something. Then each of them will go thru the same proses as the current pipline.
+- Perhaps we can also create fact table that combine series, movies, and their popularity and vote.
