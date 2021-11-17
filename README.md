@@ -236,3 +236,4 @@ create table production_company
 ## Improvement
 - The process of reading file and saving it to database is quite slow. We should implement paralelism, by listing all files in the folder, and divide it into 5 or something. Then each of them will go thru the same proses as the current pipline.
 - Perhaps we can also create fact table that combine series, movies, and their popularity and vote.
+- Add partition or index to movie and series table, when the data grows.
