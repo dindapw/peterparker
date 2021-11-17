@@ -33,8 +33,22 @@ This project attempts to build a simple data warehouse out of [this dataset](htt
 7. If the process 3 thru 5 throws an error, then file will be moved to folder error/.
 8. Repeat process 1 thru 6 until there is no more file to read.
 
+## Code
+Here's how the code here structured
 
-## Data Ware House
+    .
+    ├── dags                                          # DAG folder that will be loaded to Airflow
+    │   └── replicate_movie_and_series.py
+    ├── peterparker                                   # module forlder, where replication script reside
+    │   ├── common.py                                 # common functions
+    │   ├── replicate_movies.py                       # replicate movies
+    │   ├── replicate_series.py                       # replicate series
+    │   └── ... 
+    └── ...
+
+
+
+## Data
 ![structure](structure.png)
 
 Here is the list of table. Each table has date_effective to indicate when the data is replicated to the table. If there's a duplicate data, it will be updated, including the date_effective.
