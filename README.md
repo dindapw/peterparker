@@ -19,8 +19,10 @@ This project attempts to build a simple data warehouse out of [this dataset](htt
    - The classic, not enough time to do it "better".
 
 
+## Tech Stack
+![stack](stack.png)
+
 ## Pipeline
-![architecture](archi.png)
 1. Open folder (movies/ or series/)
 2. Read a file from folder.
 3. Convert file content to json.
@@ -73,6 +75,46 @@ create table series
 ```
 </p>
 </details>
+
+
+<details>
+<summary> table "movie" </summary>
+<p>
+
+```sql
+create table movie
+(
+    id                    int,
+    adult                 boolean,
+    backdrop_path         text,
+    belongs_to_collection json,
+    budget                int,
+    genres                int[],
+    homepage              text,
+    imdb_id               text,
+    original_language     text,
+    original_title        text,
+    overview              text,
+    popularity            numeric(6, 3),
+    poster_path           text,
+    production_companies  int[],
+    production_countries  int[],
+    release_date          timestamp,
+    revenue               int,
+    runtime               int,
+    spoken_languages      text[],
+    status                text,
+    tagline               text,
+    title                 text,
+    video                 boolean,
+    vote_average          numeric(4, 2),
+    vote_count            int,
+    date_effective        timestamp
+);
+```
+</p>
+</details>
+
 
 <details>
 <summary> table "creator" </summary>
