@@ -13,14 +13,15 @@ This project attempts to build a simple data warehouse out of [this dataset](htt
    - Environment variables is an option to set credentials but it's quite annoying to use back and forth between local machine venv and server.
    - Tutorial on how to setup free EC2 to host airflow can be read [here](https://medium.com/@dindapw/install-airlfow-2-0-on-awss-free-tier-ec2-8ab4b70d8d)
 3. The choosen database for the data warehouse is PostgreSQL.
-4. The pipeline uses two separate script [replicate_movies.py](https://github.com/dindapw/peterparker/blob/main/peterparker/replicate_movies.py) and [replicate_series.py](https://github.com/dindapw/peterparker/blob/main/peterparker/replicate_series.py), because of a few things:
+4. The pipeline uses two separate script [replicate_movies.py](peterparker/replicate_movies.py) and [replicate_series.py](peterparker/replicate_series.py), because of a few things:
    - The json struncture for movies and series is a bit different.
    - Making things generic is not always a good thing, sometimes it can be too complicated of a solution for simple problem.
    - The classic, not enough time to do it "better".
 
 
 ## Pipeline
-1. Open folder
+![architecture](archi.png)
+1. Open folder (movies/ or series/)
 2. Read a file from folder.
 3. Convert file content to json.
 4. Transform and split json into different entity based on the table structure that has been created.
