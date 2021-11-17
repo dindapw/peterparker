@@ -34,7 +34,8 @@ This project attempts to build a simple data warehouse out of [this dataset](htt
 
 
 ## Data structure
-Here's a list of the dimension tables, and its structure
+![structure](structure.png)
+Here's a list of the tables, and its structure
 <details>
 <summary> table "series" </summary>
 <p>
@@ -98,7 +99,7 @@ create table movie
     popularity            numeric(6, 3),
     poster_path           text,
     production_companies  int[],
-    production_countries  int[],
+    production_countries  text[],
     release_date          timestamp,
     revenue               int,
     runtime               int,
