@@ -17,7 +17,7 @@ with DAG(
         schedule_interval="0 */1 * * *",
         start_date=datetime(2021, 11, 18),
         catchup=False,
-        tags=['replication', 'peterparker],
+        tags=['replication', 'peterparker'],
 ) as dag:
     movies = PythonOperator(
         task_id='movies',
