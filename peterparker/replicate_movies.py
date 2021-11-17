@@ -1,6 +1,6 @@
 import json
 
-from common import config, save, archive_file, s3
+from peterparker.common import config, save, archive_file, s3
 
 
 def do_replicate_movies(data):
